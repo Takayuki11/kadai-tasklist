@@ -5,5 +5,7 @@
     <li><%= link_to task.id, task %> <%= task.status %> &gt; <%= task.content %></li>
     <% end %>
 </ul>
+<%= paginate @tasks %>
+
 
 <%= link_to "新規作成ページ", new_task_path%>
