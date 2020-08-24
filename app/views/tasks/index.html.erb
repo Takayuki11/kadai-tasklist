@@ -1,11 +1,29 @@
+<% if logged_in? %>
 <h1>タスク一覧</h1>
-
-<ul>
-    <% @tasks.each do |task| %>
-    <li><%= link_to task.id, task %> <%= task.status %> &gt; <%= task.content %></li>
-    <% end %>
+<ul class="list-unstyled">
+  <% @tasks.each do |task| %>
+    <li class="media mb-3">
+      <img class="mr-2 rounded" src="<%= gravatar_url(task.user, { size: 50 }) %>" alt="">
+      <div class="media-body">
+        <div>
+          <%= link_to task.user.name, user_path(task.user) %> <span class="text-muted">posted at <%= task.created_at %></span>
+        </div>
+        <div>
+          <p><%= link_to task.id, task %> <%= task.status %> &gt; <%= task.content %></p>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate @tasks %>
 </ul>
-<%= paginate @tasks %>
-
-
-<%= link_to "新規作成ページ", new_task_path%>
+  
+  
+  <%= link_to "新規作成ページ", new_task_path%>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>Welcome to the Microposts</h1>
+      <%= link_to 'Sign up now!', new_user_path, class: 'btn btn-lg btn-primary' %>
+    </div>
+  </div>
+<% end %>
