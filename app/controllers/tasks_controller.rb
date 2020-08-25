@@ -1,17 +1,23 @@
 class TasksController < ApplicationController
-  before_action :require_user_logged_in
-  before_action :correct_user, only: [:show, :creat, :update, :destroy]
+  before_action :require_user_logged_in, only: [:show,:new,:edit]
+  before_action :correct_user, only: [:show,:new,:edit]
   
   def index
+    if logged_in?
       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
+    end
   end
 
   def show
-    @task = Task.find(params[:id])
+    if logged_in?
+      @task = current_user.tasks.find(params[:id])
+    end
   end
 
   def new
+    if logged_in?
       @task = current_user.tasks.build
+    end
   end
 
   def create
@@ -27,7 +33,9 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = current_user.tasks.find(params[:id])
+    if logged_in?
+      @task = current_user.tasks.find(params[:id])
+    end
   end
 
   def update
