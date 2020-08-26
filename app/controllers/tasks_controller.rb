@@ -7,7 +7,7 @@ class TasksController < ApplicationController
   end
 
   def show
-      @task = current_user.tasks.find(params[:id])
+      
   end
 
   def new
@@ -28,13 +28,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    if logged_in?
-      @task = current_user.tasks.find(params[:id])
-    end
+      
   end
 
   def update
-    
       @task = current_user.tasks.find(params[:id])
   
       if @task.update(task_params)
@@ -44,17 +41,14 @@ class TasksController < ApplicationController
         flash.now[:danger] = 'task は更新されませんでした'
         render :edit
       end
-    
   end
 
   def destroy
-    
-      @task = current_user.tasks.find(params[:id])
+      
       @task.destroy
       
       flash[:success] = "taskは正常に削除されました。"
       redirect_to tasks_url
-    
   end
   
   private
